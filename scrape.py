@@ -6,24 +6,26 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
+import threading
 import time 
 import re
+
 driver = webdriver.Chrome()
 
 def main():
     print("getting links...")
-
-    scrollDepth = 0
+    
+    # every scroll is 20 products!!
+    scrollDepth = 5
 
     links = getProductLinks('https://www.grailed.com/categories/all', scrollDepth)
-
-    print("scraping products...") 
-    
-    for link in links:
-        try:
-            scrapeProduct(link)
-        except:
-            print("there was an error scraping this product: " + link)
+    print("scraping " +str(len(links))+ " products...") 
+    # 
+    # for link in links:
+    #     try:
+    #         scrapeProduct(link)
+    #     except:
+    #         print("there was an error scraping this product: " + link)
 
 
 # returns list of links to products
@@ -33,10 +35,10 @@ def getProductLinks(URL, NUM_OF_SCROLLS):
     time.sleep(1)
     # scroll to bottom to see more products
     scroll_to_me = driver.find_element(By.TAG_NAME, "footer")
-    SCROLL_WAIT_TIME = .8
+    SCROLL_WAIT_TIME = 1
     for i in range(NUM_OF_SCROLLS):
         ActionChains(driver)\
-            .scroll_to_element(scroll_to_me)\
+            .scroll_by_amount(0, 3000)\
             .perform()
         time.sleep(SCROLL_WAIT_TIME)
     
