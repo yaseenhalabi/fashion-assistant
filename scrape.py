@@ -20,12 +20,12 @@ def main():
 
     links = getProductLinks('https://www.grailed.com/categories/all', scrollDepth)
     print("scraping " +str(len(links))+ " products...") 
-    # 
-    # for link in links:
-    #     try:
-    #         scrapeProduct(link)
-    #     except:
-    #         print("there was an error scraping this product: " + link)
+
+    for link in links:
+        try:
+            scrapeProduct(link)
+        except:
+            print("there was an error scraping this product: " + link)
 
 
 # returns list of links to products
