@@ -5,18 +5,22 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.chrome.options import Options
 
-import threading
 import time 
 import re
 
-driver = webdriver.Chrome()
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+
+chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+driver = webdriver.Chrome(options=chrome_options)
 
 def main():
     print("getting links...")
     
     # every scroll is 20 products!!
-    scrollDepth = 5
+    scrollDepth = 1
 
     links = getProductLinks('https://www.grailed.com/categories/all', scrollDepth)
     print("scraping " +str(len(links))+ " products...") 
@@ -34,22 +38,25 @@ def getProductLinks(URL, NUM_OF_SCROLLS):
     driver.get(URL)
     time.sleep(1)
     # scroll to bottom to see more products
-    scroll_to_me = driver.find_element(By.TAG_NAME, "footer")
-    SCROLL_WAIT_TIME = 1
+    SCROLL_WAIT_TIME = .2
     for i in range(NUM_OF_SCROLLS):
         ActionChains(driver)\
             .scroll_by_amount(0, 3000)\
             .perform()
         time.sleep(SCROLL_WAIT_TIME)
     
+    try:
 
-    product_element_container = driver.find_element(By.CLASS_NAME, "feed")
-    product_elements = product_element_container.find_elements(By.CLASS_NAME, "listing-item-link")
-    
-    product_links = list(map(lambda element: element.get_attribute("href"), product_elements))
+        driver.save_screenshot('screenshot.png')
+        product_element_container = driver.find_element(By.CLASS_NAME, "feed")
+        product_elements = product_element_container.find_elements(By.CLASS_NAME, "listing-item-link")
+        
+        product_links = list(map(lambda element: element.get_attribute("href"), product_elements))
 
-    return product_links
-
+        return product_links
+    except:
+        print("could not find elements :(")
+        return []
 
 
 # returns dictionary of product data 
