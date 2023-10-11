@@ -1,5 +1,5 @@
 # fashion-assistant
-grailed webscraper that uses chat gpt api to recommend certain clothing items to fit your taste
+grailed webscraper that uses chat gpt to recommend certain clothing items to fit your taste
 
 <h3>Requirements:</h3>
 <ul>
