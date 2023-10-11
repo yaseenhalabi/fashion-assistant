@@ -32,4 +32,6 @@ grailed webscraper that uses chat gpt api to recommend certain clothing items to
   npm run dev:both
 ```
 
-<img src=""></img>
+<img width="419" alt="Screenshot 2023-10-11 at 3 24 17 PM" src="https://github.com/yaseenhalabi/fashion-assistant/assets/120742654/0b429e42-d831-483b-8180-cb34d8b9035b">
+
+<p> Go to localhost:5173 and enjoy!</p>
