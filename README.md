@@ -4,6 +4,10 @@ grailed webscraper that uses chat gpt api to recommend certain clothing items to
 <h3>Requirements:</h3>
 <ul>
   <li>Must have Chrome webdriver installed (comes with downloading chrome)</li>
+  <li>Python</li>
+  <li>Node</li>
+  
+  
 </ul>
 <h2><strong>Install and run</strong></h2>
 <p>clone the repository</p>
@@ -14,11 +18,18 @@ grailed webscraper that uses chat gpt api to recommend certain clothing items to
 <p>install required packages</p>
 
 ```sh
-  pip install selenium
+  pip install selenium fastapi
 ```
-
-<p>run scrape.py</p>
 
 ```sh
-  python scrape.py
+  cd frontend/app
+  npm install
 ```
+
+<p>in frontend/app</p>
+
+```sh
+  npm run dev:both
+```
+
+<img src=""></img>
