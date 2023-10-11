@@ -22,8 +22,9 @@ grailed webscraper that uses chat gpt to recommend certain clothing items to fit
 ```
 
 ```sh
-  cd frontend/app
+  cd fashion-assistant/frontend/app
   npm install
+  npm install concurrently
 ```
 
 <p>in frontend/app</p>
