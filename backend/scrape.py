@@ -16,30 +16,33 @@ chrome_options.add_argument("--headless")
 chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36")
 driver = webdriver.Chrome(options=chrome_options)
 
-def main():
+def getAllClothingData(depth):
     print("getting links...")
     
     # every scroll is 20 products!!
-    scrollDepth = 1
 
-    links = getProductLinks('https://www.grailed.com/categories/all', scrollDepth)
-    print("scraping " +str(len(links))+ " products...") 
+    links = list(set(getProductLinks('https://www.grailed.com/categories/all', depth)))
+
+    listOfData = []
 
     for link in links:
         try:
-            scrapeProduct(link)
+            listOfData.append(scrapeProduct(link))
         except:
-            print("there was an error scraping this product: " + link)
+            print("could not scrape " + link)
 
+    print("scraped " +str(len(links))+ " products...") 
+
+    return listOfData
 
 # returns list of links to products
-def getProductLinks(URL, NUM_OF_SCROLLS):
+def getProductLinks(url, num_of_scrolls):
 
-    driver.get(URL)
+    driver.get(url)
     time.sleep(1)
     # scroll to bottom to see more products
-    SCROLL_WAIT_TIME = .2
-    for i in range(NUM_OF_SCROLLS):
+    SCROLL_WAIT_TIME = .5
+    for i in range(num_of_scrolls):
         ActionChains(driver)\
             .scroll_by_amount(0, 3000)\
             .perform()
@@ -47,7 +50,7 @@ def getProductLinks(URL, NUM_OF_SCROLLS):
     
     try:
 
-        driver.save_screenshot('screenshot.png')
+        # driver.save_screenshot('screenshot.png')
         product_element_container = driver.find_element(By.CLASS_NAME, "feed")
         product_elements = product_element_container.find_elements(By.CLASS_NAME, "listing-item-link")
         
@@ -60,13 +63,14 @@ def getProductLinks(URL, NUM_OF_SCROLLS):
 
 
 # returns dictionary of product data 
-def scrapeProduct(URL):
+def scrapeProduct(url):
     
     data = {}
     
-    data['url'] = URL 
-    driver.get(URL)
-    
+    data['url'] = url 
+    driver.get(url)
+   
+    data['image'] = driver.find_element(By.CLASS_NAME, "Photo_photo__9PBT1").find_element(By.TAG_NAME, "img").get_attribute("src")
     # the sidebar contains all the good stuff
     sidebar = driver.find_element(By.CLASS_NAME, "MainContent_sidebar__29G6s")
     # get the basic data - tags, size, color, condition 
@@ -89,17 +93,18 @@ def scrapeProduct(URL):
     data['color'] = basic_data.find_elements(By.CLASS_NAME, "Details_nonMobile__AObqX")[1].text.split()[-1]
 
     data['condition'] = basic_data.find_elements(By.CLASS_NAME, "Details_nonMobile__AObqX")[2].text.split()[-1]
+   
+    # get measurements 
+    # try:
+    #
+    # except:
 
     # now that we are done getting the basic stuff, on to the description...
     try:
         data['description'] = " ".join(list(map(lambda x: x.text, sidebar.find_elements(By.CLASS_NAME, "ListingPage-Description-Body-Paragraph"))))
     except:
         data['description'] = "none"
-    print(data)
-    print()
-    
-if __name__ == "__main__":
-    start_time = time.time() 
-    main()  
-    
-    print("end time: " + str(time.time()-start_time))
+    print("scraped " + data['tags'])
+
+    return data
+# getAllClothingData(2)
