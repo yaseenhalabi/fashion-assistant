@@ -22,7 +22,8 @@ function Product(props){
 
     <>
       
-      <div className="max-w-sm rounded-xl shadow-md md:max-w-2xl m-5">
+    <div className="max-h-auto lg:basis-6/12 sm:basis-full mx-auto">
+
 
       <div className="md:flex">
         <div className="md:flex-shrink-0">
