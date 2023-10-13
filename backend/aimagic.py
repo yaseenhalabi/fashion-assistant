@@ -53,8 +53,20 @@ def preprocess_data(tagged_data, untagged_data):
 
 # Sample data for testing the preprocessing function
 
-with open('clothes_data.json', 'r') as json_file:
-    untagged_sample = json.load(json_file)
+untagged_sample = [
+    {
+        "rating": 5,
+        "color": "green",
+        "condition": "used",
+        "size": "US M",
+        "image": "url2",
+        "price": "$30",
+        "url": "url2",
+        "tags": "green shirt vintage",
+        "description": "A vintage green shirt."
+    }
+]
+ 
   
 tagged_sample = [
     {

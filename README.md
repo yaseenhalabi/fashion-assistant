@@ -18,7 +18,7 @@ grailed webscraper that uses chat gpt to recommend certain clothing items to fit
 <p>install required packages</p>
 
 ```sh
-  pip install selenium fastapi
+  pip install -r requirements.txt
 ```
 
 ```sh
