@@ -2,11 +2,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import scrape
+import aimagic
 from pydantic import BaseModel
 
 class PrefererredClothes(BaseModel):
-    opinion: str
-    name: str
+    rating: str
+    url: str
     price: str 
     tags: str
     size: str
@@ -23,13 +24,12 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
 )
-@app.post("/findNewProducts{depth}")
+@app.post("/api/findNewProducts/{depth}")
 def findNewProducts(depth: int, prefererred_clothes: list[PrefererredClothes]): 
     dataList = scrape.getAllClothingData(depth)
-    
-    for clothing_item in prefererred_clothes:
-        print("preference noted")
+     
     return prefererred_clothes 
+
 
 @app.get("/api/getAvailableProducts")
 def getAvailableProducts():

@@ -9,10 +9,16 @@ function Product(props){
  
   const starRating = []
 
-  for (let i = 0; i<5; i++)
+
+  const handleRatingChange = (newRating) => {
+    setRating(newRating);
+    props.onRatingChange(newRating);
+  };
+
+  for (let i = 1; i<=5; i++)
     {
       starRating.push(
-        <button className="text-lg select-none" onClick={() => setRating(i)}>
+        <button className="text-lg select-none" onClick={() => handleRatingChange(i)}>
           {i<=rating? <div>★</div> : <div>☆</div>}
         </button>
       )

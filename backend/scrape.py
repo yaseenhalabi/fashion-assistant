@@ -107,4 +107,4 @@ def scrapeProduct(url):
     print("scraped " + data['tags'])
 
     return data
-# getAllClothingData(2)
+# getAllClothingData(2
