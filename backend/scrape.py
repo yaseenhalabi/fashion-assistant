@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
-
+import math
 import time 
 import re
 
@@ -14,52 +14,45 @@ chrome_options = Options()
 chrome_options.add_argument("--headless")
 
 chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36")
+chrome_options.add_argument('--disk-cache-dir=/path/to/cache')
+
 driver = webdriver.Chrome(options=chrome_options)
 
-def getAllClothingData(depth):
-    print("getting links...")
+def getAllClothingData(num_of_items):
     
-    # every scroll is 20 products!!
 
-    links = list(set(getProductLinks('https://www.grailed.com/categories/all', depth)))
+    links = getProductLinks('https://www.grailed.com/categories/all', num_of_items)
 
     listOfData = []
 
     for link in links:
-        try:
-            listOfData.append(scrapeProduct(link))
-        except:
-            print("could not scrape " + link)
-
-    print("scraped " +str(len(links))+ " products...") 
+        listOfData.append(scrapeProduct(link))
 
     return listOfData
 
 # returns list of links to products
-def getProductLinks(url, num_of_scrolls):
-
-    driver.get(url)
-    time.sleep(1)
-    # scroll to bottom to see more products
-    SCROLL_WAIT_TIME = .5
-    for i in range(num_of_scrolls):
-        ActionChains(driver)\
-            .scroll_by_amount(0, 3000)\
-            .perform()
-        time.sleep(SCROLL_WAIT_TIME)
+def getProductLinks(url: str, num_of_items: int):
     
+    driver.get(url) 
+    wait = WebDriverWait(driver, 2).until(     
+      EC.presence_of_element_located((By.CLASS_NAME, "feed")) 
+    )
+    # scroll to bottom to see more products
+    num_of_scrolls = math.ceil((num_of_items-40)/40)  
+    for i in range(num_of_scrolls):  
+        ActionChains(driver)\
+            .scroll_by_amount(0, 8000)\
+            .perform()
+        time.sleep(3)
+     
     try:
-
         # driver.save_screenshot('screenshot.png')
-        product_element_container = driver.find_element(By.CLASS_NAME, "feed")
-        product_elements = product_element_container.find_elements(By.CLASS_NAME, "listing-item-link")
-        
-        product_links = list(map(lambda element: element.get_attribute("href"), product_elements))
-
-        return product_links
-    except:
-        print("could not find elements :(")
-        return []
+        feed = driver.find_element(By.CLASS_NAME, "feed")
+        feed_items = feed.find_elements(By.CLASS_NAME, "listing-item-link")
+        links = list(map(lambda item: item.get_attribute("href"), feed_items[:num_of_items]))
+        return links
+    except OSError:
+        return error
 
 
 # returns dictionary of product data 
@@ -94,17 +87,11 @@ def scrapeProduct(url):
 
     data['condition'] = basic_data.find_elements(By.CLASS_NAME, "Details_nonMobile__AObqX")[2].text.split()[-1]
    
-    # get measurements 
-    # try:
-    #
-    # except:
-
-    # now that we are done getting the basic stuff, on to the description...
     try:
         data['description'] = " ".join(list(map(lambda x: x.text, sidebar.find_elements(By.CLASS_NAME, "ListingPage-Description-Body-Paragraph"))))
     except:
         data['description'] = "none"
-    print("scraped " + data['tags'])
 
+    print("scraped " + url[42:55] + "...")
     return data
 # getAllClothingData(2
