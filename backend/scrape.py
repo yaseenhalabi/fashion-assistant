@@ -94,4 +94,3 @@ def scrapeProduct(url):
 
     print("scraped " + url[42:55] + "...")
     return data
-# getAllClothingData(2

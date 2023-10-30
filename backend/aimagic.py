@@ -13,8 +13,8 @@ def preprocess_data(tagged_data, untagged_data):
     all_data = tagged_data + untagged_data
     
     # Vectorize tags and description using TF-IDF
-    tfidf_tags = TfidfVectorizer(max_features=100)
-    tfidf_desc = TfidfVectorizer(max_features=100)
+    tfidf_tags = TfidfVectorizer(max_features=3)
+    tfidf_desc = TfidfVectorizer(max_features=20)
     tags_matrix = tfidf_tags.fit_transform([d['tags'] for d in all_data])
     desc_matrix = tfidf_desc.fit_transform([d['description'] for d in all_data])
     
