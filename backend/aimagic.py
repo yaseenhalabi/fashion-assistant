@@ -52,7 +52,7 @@ def preprocess_data(tagged_data, untagged_data):
 
 from sklearn.ensemble import RandomForestRegressor
 
-def select_top_clothes(tagged_data, untagged_data):
+def select_top_clothes(tagged_data, untagged_data, num_of_items):
     # Preprocess the data
     X_tagged, y, X_untagged = preprocess_data(tagged_data, untagged_data)
     
@@ -64,7 +64,7 @@ def select_top_clothes(tagged_data, untagged_data):
     predicted_ratings = model.predict(X_untagged)
     
     # Get indices of top 10 predicted ratings
-    top_indices = np.argsort(predicted_ratings)[-50:][::-1]
+    top_indices = np.argsort(predicted_ratings)[-(num_of_items):][::-1]
     
     # Return top 10 items
     return [untagged_data[i] for i in top_indices]

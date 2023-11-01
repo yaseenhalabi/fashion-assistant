@@ -43,13 +43,14 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
-@app.post("/api/findNewProducts/{depth}")
-def findNewProducts(depth: int, prefererred_clothes: list[PrefererredClothes]):
+@app.post("/api/getProductMatches/{num_of_items}")
+def getProductMatches(num_of_items: int, prefererred_clothes: list[PrefererredClothes]):
 
     untagged = data.getData()
+
     tagged = [convertToUsableJson(i.json()) for i in prefererred_clothes]
 
-    matches = aimagic.select_top_clothes(tagged_data=tagged, untagged_data=untagged)
+    matches = aimagic.select_top_clothes(tagged_data=tagged, untagged_data=untagged, num_of_items=num_of_items)
 
     return matches
 

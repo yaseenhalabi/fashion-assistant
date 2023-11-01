@@ -1,12 +1,10 @@
 import { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 function Product(props){
 
-
+  
   const [rating, setRating] = useState(0) 
- 
+   
   const starRating = []
 
 
