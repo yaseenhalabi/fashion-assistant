@@ -1,6 +1,7 @@
 import {useState} from "react"
-import ReactLoading from 'react-loading' 
 import Product from "./Product"
+import LoadingAnimation from "./LoadingAnimation"
+import StartButton from "./StartButton"
 import { getProducts, getProductMatches } from "../services/ProductService"  
 
 function ProductsContainer() {
@@ -8,29 +9,42 @@ function ProductsContainer() {
   const [productDataList, setProductDataList] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
-  const setProducts = async(num_of_items) => {
-    setIsLoading(true)
-    const data = await getProducts(num_of_items)
-    console.log(data)
-    setProductDataList(data)
-    setIsLoading(false)
+  const fetchProducts = async(num_of_items) => {
+
+    try {
+      setIsLoading(true)
+      const data = await getProducts(num_of_items)
+      console.log(data)
+      setProductDataList(data)
+    }
+
+    catch(error) {
+      console.error(error)
+    }
+
+    finally {
+      setIsLoading(false)
+    }
   }
 
-  const setProductMatches = async(num_of_items) => {
-    const data = await getProductMatches(num_of_items, productDataList)
-    console.log(data) 
-    setProductDataList(data)         
+  const fetchProductMatches = async(num_of_items) => {
+    try{
+      const data = await getProductMatches(num_of_items, productDataList)
+      setProductDataList(data)         
+    }
+    catch(error){
+      console.error(error)
+    }
   }
 
   // callback funciton that gets the star rating 
   const updateProductRating = (index, newRating) => {
     const updatedProducts = [...productDataList];
     updatedProducts[index].rating = newRating.toString();
-    setProductDataList(updatedProducts);
-  };
+    setProductDataList(updatedProducts); };
 
   // map objects in productDataList 
-  let cardElements = productDataList.map((item,index) =>  
+  const renderProductCards = productDataList.map((item,index) =>  
     <Product
       key={item.url}
       onRatingChange={(newRating) => updateProductRating(index, newRating)}
@@ -46,17 +60,20 @@ function ProductsContainer() {
   )
 
   //what user sees first
-  const startButton = <button className={"text-2xl bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"} onClick={() => setProducts(2)}>Commence Scraping</button>
-  const loadingElement = <ReactLoading className="m-auto mt-56" type="spinningBubbles" color="black" height={667} width={375} />
-  const buttonThenLoading = isLoading? loadingElement : <div className="m-auto mt-56">{startButton}<p className="text-center">This may take a minute</p></div>
 
-  
+  const renderLoadingOrButton = isLoading? <LoadingAnimation/> : <StartButton function={() => fetchProducts(2)}/>
+
+  const renderFindMatchesButton = () => {
+    return (
+      <button onClick={() => fetchProductMatches(2)} className="bg-blue-500 text-white hover:bg-blue-700 py-2 px-4 font-bold rounded-lg m-auto">Find Matches</button>
+    )
+  }
   return (
 
-  <div className="flex flex-wrap">
-    {productDataList.length == 0? buttonThenLoading: ""}
-    {cardElements}
-    {productDataList.length !== 0? <button onClick={() => setProductMatches(2)} className="bg-blue-500 text-white hover:bg-blue-700 py-2 px-4 font-bold rounded-lg m-auto">Submit</button>: ""}
+    <div className="flex flex-wrap">
+      {productDataList.length == 0 && renderLoadingOrButton}
+      {renderProductCards}
+      {productDataList.length !== 0 && renderFindMatchesButton()}
     </div>
 
   )
