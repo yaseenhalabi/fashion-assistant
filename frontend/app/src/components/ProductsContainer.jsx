@@ -8,7 +8,7 @@ function ProductsContainer() {
 
   const [productDataList, setProductDataList] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-
+  
   const fetchProducts = async(num_of_items) => {
 
     try {
@@ -44,28 +44,35 @@ function ProductsContainer() {
     setProductDataList(updatedProducts); };
 
   // map objects in productDataList 
-  const renderProductCards = productDataList.map((item,index) =>  
-    <Product
-      key={item.url}
-      onRatingChange={(newRating) => updateProductRating(index, newRating)}
-      color={item.color}
-      condition={item.condition}
-      description={item.description}
-      imageAddress={item.image}
-      price={item.price}
-      size={item.size}
-      tags={item.tags}
-      url={item.url}
-    />
-  )
+  let renderProductCards
+  if (productDataList.length != 0){
+    renderProductCards = productDataList.map((item,index) =>  
+      <Product
+        key={item.url}
+        onRatingChange={(newRating) => updateProductRating(index, newRating)}
+        color={item.color}
+        condition={item.condition}
+        description={item.description}
+        imageAddress={item.image}
+        price={item.price}
+        size={item.size}
+        tags={item.tags}
+        url={item.url}
+      />
+    )
 
+  } 
   //what user sees first
 
   const renderLoadingOrButton = isLoading? <LoadingAnimation/> : <StartButton function={() => fetchProducts(2)}/>
 
   const renderFindMatchesButton = () => {
     return (
-      <button onClick={() => fetchProductMatches(2)} className="bg-blue-500 text-white hover:bg-blue-700 py-2 px-4 font-bold rounded-lg m-auto">Find Matches</button>
+      <button 
+        onClick={() => fetchProductMatches(2)} 
+        className="bg-blue-500 text-white hover:bg-blue-700 py-2 px-4 font-bold rounded-lg m-auto">
+        Find Matches
+      </button>
     )
   }
   return (

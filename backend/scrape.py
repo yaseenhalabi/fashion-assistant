@@ -91,6 +91,7 @@ def scrapeProduct(url):
         data['description'] = " ".join(list(map(lambda x: x.text, sidebar.find_elements(By.CLASS_NAME, "ListingPage-Description-Body-Paragraph"))))
     except:
         data['description'] = "none"
-
+    
+    data['rating'] = "0"
     print("scraped " + url[42:55] + "...")
     return data

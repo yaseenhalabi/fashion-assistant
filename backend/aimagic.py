@@ -66,14 +66,16 @@ def select_top_clothes(tagged_data, untagged_data, num_of_items):
     # Get indices of top 10 predicted ratings
     top_indices = np.argsort(predicted_ratings)[-(num_of_items):][::-1]
     
+    data = [untagged_data[i] for i in top_indices]
+
+    for d in data:
+        d['rating'] = "0"
     # Return top 10 items
-    return [untagged_data[i] for i in top_indices]
-
-# Testing with the sample data (This won't be very meaningful with just one sample, but it's for testing purposes)
+    return data
 
 
 
-# Sample data for testing the preprocessing function
+
 untagged_sample = [
     {
         "url": "https://www.grailed.com/listings/51148652-nike-x-nike-acg-x-outdoor-life-nike-acg-outdoor-hiking-mountain-jacket-recco-system?g_aidx=Listing_production&g_aqid=e0d7161859767ce3bbe57f3fca6babca",

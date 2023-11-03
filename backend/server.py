@@ -51,7 +51,7 @@ def getProductMatches(num_of_items: int, prefererred_clothes: list[PrefererredCl
     tagged = [convertToUsableJson(i.json()) for i in prefererred_clothes]
 
     matches = aimagic.select_top_clothes(tagged_data=tagged, untagged_data=untagged, num_of_items=num_of_items)
-
+    
     return matches
 
 
