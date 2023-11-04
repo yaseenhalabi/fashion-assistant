@@ -13,19 +13,19 @@ grailed webscraper that uses chat gpt to recommend certain clothing items to fit
 <p>clone the repository</p>
 
 ```sh
-  git clone https://github.com/yaseenhalabi/fashion-assistant.git
-  cd fashion-assistant
+git clone https://github.com/yaseenhalabi/fashion-assistant.git
+cd fashion-assistant
 ```
 <p>install required packages</p>
 
 ```sh
-    npm run install-all
+npm run install-all
 ```
 
 <p>run app</p>
 
 ```sh
-  npm run dev:both
+npm run dev:both
 ```
 
 <img width="419" alt="Screenshot 2023-10-11 at 3 24 17 PM" src="https://github.com/yaseenhalabi/fashion-assistant/assets/120742654/0b429e42-d831-483b-8180-cb34d8b9035b">
