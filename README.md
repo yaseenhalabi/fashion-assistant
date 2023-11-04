@@ -19,16 +19,10 @@ grailed webscraper that uses chat gpt to recommend certain clothing items to fit
 <p>install required packages</p>
 
 ```sh
-  pip install -r requirements.txt
+    npm run install-all
 ```
 
-```sh
-  cd frontend/app
-  npm install
-  npm install concurrently
-```
-
-<p>run in frontend/app</p>
+<p>run app</p>
 
 ```sh
   npm run dev:both

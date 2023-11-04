@@ -4,6 +4,7 @@
   "description": "grailed webscraper that uses chat gpt to recommend certain clothing items to fit your taste",
   "main": "index.js",
   "scripts": {
+    "install-all": "pip install -r requirements.txt npm install && npm install concurrently && cd frontend && npm install",
     "dev:backend": "cd backend && uvicorn server:app --reload",
     "dev:frontend": "cd frontend && vite",
     "dev:both": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" ",
