@@ -1,4 +1,4 @@
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import Product from "./Product"
 import LoadingAnimation from "./LoadingAnimation"
 import StartButton from "./StartButton"
@@ -36,7 +36,10 @@ function ProductsContainer() {
       console.error(error)
     }
   }
-
+  
+  useEffect(() => {
+    fetchProducts(2)
+  }, [])
   // callback funciton that gets the star rating 
   const updateProductRating = (index, newRating) => {
     const updatedProducts = [...productDataList];
@@ -64,7 +67,9 @@ function ProductsContainer() {
   } 
   //what user sees first
 
-  const renderLoadingOrButton = isLoading? <LoadingAnimation/> : <StartButton function={() => fetchProducts(2)}/>
+  const renderLoading = isLoading? <LoadingAnimation/> : ""
+  
+    // <StartButton function={() => fetchProducts(2)}/>
 
   const renderFindMatchesButton = () => {
     return (
@@ -78,7 +83,7 @@ function ProductsContainer() {
   return (
 
     <div className="flex flex-wrap">
-      {productDataList.length == 0 && renderLoadingOrButton}
+      {productDataList.length == 0 && renderLoading}
       {renderProductCards}
       {productDataList.length !== 0 && renderFindMatchesButton()}
     </div>

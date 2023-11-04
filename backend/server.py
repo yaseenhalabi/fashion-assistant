@@ -68,4 +68,6 @@ def getAvailableProducts(num_of_items: int):
 
 @app.get("/")
 def home():
-    return "HOME ROUTE"
+    return {"message": "hello world"}
+
+
