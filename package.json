@@ -1,0 +1,17 @@
+{
+  "name": "fashion-assistant",
+  "version": "1.0.0",
+  "description": "grailed webscraper that uses chat gpt to recommend certain clothing items to fit your taste",
+  "main": "index.js",
+  "scripts": {
+    "dev:backend": "cd backend && uvicorn server:app --reload",
+    "dev:frontend": "cd frontend/app && vite",
+    "dev:both": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

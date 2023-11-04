@@ -4,9 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev:backend": "cd ../../backend/ && uvicorn server:app --reload",
-    "dev:frontend": "vite",
-    "dev:both": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" ",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
