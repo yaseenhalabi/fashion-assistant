@@ -75,7 +75,7 @@ function ProductsContainer() {
     return (
       <button 
         onClick={() => fetchProductMatches(2)} 
-        className="bg-blue-500 text-white hover:bg-blue-700 py-2 px-4 font-bold rounded-lg m-auto">
+        className="bg-blue-500 text-white hover:bg-blue-700 py-2 w-full font-bold my-8">
         Find Matches
       </button>
     )

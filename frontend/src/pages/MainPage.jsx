@@ -1,10 +1,14 @@
 import ProductsContainer from "../components/layout/ProductsContainer"
+import RevealText from "../components/layout/RevealText"
 
 function MainPage() {
    
   return (
   <>
-    {<ProductsContainer />}
+  <div className="p-5">
+    <RevealText />    
+    <ProductsContainer />
+  </div>
   </>
   )
 }
