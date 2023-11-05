@@ -3,7 +3,7 @@ import axios from "axios";
 export const getProducts = async(num_of_items) => {
   var data
   
-  await axios.get(`http://localhost:8000/api/getAvailableProducts/` + num_of_items.toString())
+  await axios.get(`http://localhost:8000/api/getProducts/` + num_of_items.toString())
     .then(response => {
       data = response.data
       data = data.map(item => ({...item, rating: "0"}))
