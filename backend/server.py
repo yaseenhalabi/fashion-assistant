@@ -37,15 +37,16 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"], 
+    allow_headers=["*"],  
 )
 
 @app.post("/api/getProductMatches/{num_of_items}")
 def getProductMatches(num_of_items: int, prefererred_clothes: list[PrefererredClothes]):
-
+    
+    #gets untagged data from data.py
     untagged = data.getData()
 
     tagged = [convertToUsableJson(i.model_dump_json()) for i in prefererred_clothes]
