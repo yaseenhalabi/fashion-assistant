@@ -1,10 +1,16 @@
-import ProductsContainer from "./components/ProductsContainer"
+import MainPage from "./pages/MainPage"
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
    
   return (
   <>
-    {<ProductsContainer />}
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPage />}>
+        </Route>
+      </Routes>
+    </Router>
   </>
   )
 }

@@ -1,8 +1,8 @@
 import {useState, useEffect} from "react"
-import Product from "./Product"
-import LoadingAnimation from "./LoadingAnimation"
-import StartButton from "./StartButton"
-import { getProducts, getProductMatches } from "../services/ProductService"  
+import Product from "../common/Product"
+import LoadingAnimation from "../common/LoadingAnimation"
+import { getProducts, getProductMatches } from "../../services/ProductService"  
+
 
 function ProductsContainer() {
 
