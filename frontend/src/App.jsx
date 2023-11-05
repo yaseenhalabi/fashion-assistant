@@ -7,8 +7,7 @@ function App() {
   <>
     <Router>
       <Routes>
-        <Route path="/" element={<MainPage />}>
-        </Route>
+        <Route path="/" element={<MainPage />} />
       </Routes>
     </Router>
   </>
