@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import scrape
 import aimagic
-import data
+import sample_data1
+import sample_data2
 from pydantic import BaseModel
 import json
 
@@ -46,7 +47,7 @@ app.add_middleware(
 def getProductMatches(num_of_items: int, prefererred_clothes: list[PrefererredClothes]):
     
     #gets untagged data from data.py
-    untagged = data.getData()
+    untagged = sample_data1.getData()
 
     tagged = [convertToUsableJson(i.model_dump_json()) for i in prefererred_clothes]
 
@@ -59,7 +60,8 @@ def getProductMatches(num_of_items: int, prefererred_clothes: list[PrefererredCl
 def getAvailableProducts(num_of_items: int):
 
     try:
-        dataList = scrape.getAllClothingData(num_of_items)
+        # dataList = scrape.getAllClothingData(num_of_items) 
+        dataList = sample_data2.getData()[:num_of_items]
 
     except:
         return "there was an error scraping clothes"
