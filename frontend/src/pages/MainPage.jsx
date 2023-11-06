@@ -11,6 +11,8 @@ function MainPage() {
   return (
   <>
   <div className="p-5">
+
+     
     <div className="flex items-center cursor-pointer select-none" onClick={toggleOpen}>
       <span className="mr-2">How to Use</span>
       <span className={`transform transition-transform ${isOpen ? 'rotate-90' : ''}`}>
@@ -22,6 +24,8 @@ function MainPage() {
     </div>
 
     <ProductsContainer />
+
+
   </div>
   </>
   )
