@@ -19,7 +19,6 @@ class PrefererredClothes(BaseModel):
 
 def convertToUsableJson(x):
     item = json.loads(x)
-    print(item)
     return {
         "rating": item['rating'],
         "url": item['url'],

@@ -20,7 +20,6 @@ driver = webdriver.Chrome(options=chrome_options)
 
 def getAllClothingData(num_of_items):
     
-
     links = getProductLinks('https://www.grailed.com/categories/all', num_of_items)
 
     listOfData = []
@@ -34,9 +33,11 @@ def getAllClothingData(num_of_items):
 def getProductLinks(url: str, num_of_items: int):
     
     driver.get(url) 
+
     wait = WebDriverWait(driver, 2).until(     
       EC.presence_of_element_located((By.CLASS_NAME, "feed")) 
     )
+
     # scroll to bottom to see more products
     num_of_scrolls = math.ceil((num_of_items-40)/40)  
     for i in range(num_of_scrolls):  
@@ -45,8 +46,7 @@ def getProductLinks(url: str, num_of_items: int):
             .perform()
         time.sleep(3)
      
-    try:
-        # driver.save_screenshot('screenshot.png')
+    try: # driver.save_screenshot('screenshot.png')
         feed = driver.find_element(By.CLASS_NAME, "feed")
         feed_items = feed.find_elements(By.CLASS_NAME, "listing-item-link")
         links = list(map(lambda item: item.get_attribute("href"), feed_items[:num_of_items]))
