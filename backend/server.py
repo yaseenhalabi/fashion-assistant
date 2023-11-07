@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import scrape
+# import scrape
+#fix scrape it has error with chromedriver!!!!
 import aimagic
 import sample_data1
 import sample_data2
