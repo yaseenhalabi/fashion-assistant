@@ -3,24 +3,6 @@ import { useState } from 'react'
 function Product(props){
 
   
-  const [rating, setRating] = useState(0) 
-   
-  const starRating = []
-
-
-  const handleRatingChange = (newRating) => {
-    setRating(newRating);
-    props.onRatingChange(newRating);
-  };
-
-  for (let i = 1; i<=5; i++)
-    {
-      starRating.push(
-        <button className="text-lg select-none" onClick={() => handleRatingChange(i)}>
-          {i<=rating? <div>★</div> : <div>☆</div>}
-        </button>
-      )
-    } 
   
   return (
 
@@ -34,7 +16,7 @@ function Product(props){
           <img className="h-full w-full object-cover md:w-48" src={props.imageAddress} alt="IMAGE MISSING" />
           </div>
           <div className="p-8 pt-0">
-            <div className="flex">{starRating}</div>
+            <div className="flex">✅</div>
             <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
               <a href={props.url} className="hover:underline">{props.tags}</a>
             </div>
