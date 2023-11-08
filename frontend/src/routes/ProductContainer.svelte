@@ -4,6 +4,7 @@
   import { onMount } from 'svelte';
   
   let products = []
+  let selectedProducts = []
 
   onMount(async () => {
     products = await getProducts(10); // Load 10 products on component mount, for example
@@ -12,13 +13,26 @@
   const fetchProductMatches = async() => {
     products = await getProductMatches(10, products)
   }
-  
+
+  const addSelectedProduct = (product) => {
+    selectedProducts.push(product)
+    console.log(selectedProducts)
+  }
+
+  const removeSelectedProduct = (product) => {
+    selectedProducts = selectedProducts.filter(item => item.url !== product.url);
+    console.log(selectedProducts)
+  }
+
+
 </script>
 
 <div>
   <div class="grid md:grid-cols-2 gap-4">
   {#each products as product (product.url)}
-    <Product 
+    <Product
+      addSelectedProduct={() => addSelectedProduct(product)}
+      removeSelectedProduct={() => removeSelectedProduct(product)}
       imageAddress={product.image} 
       url={product.url} 
       tags={product.tags} 
