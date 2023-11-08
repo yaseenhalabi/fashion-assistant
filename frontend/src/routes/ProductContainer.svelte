@@ -7,14 +7,13 @@
 
   onMount(async () => {
     products = await getProducts(10); // Load 10 products on component mount, for example
-    console.log(products)
   });
 
 
 </script>
 
-<div>
-
+<div class="">
+  <div class="grid md:grid-cols-2 gap-4">
   {#each products as product (product.url)} <!-- Assuming each product has a unique 'id' -->
     <Product 
       imageAddress={product.image} 
@@ -27,5 +26,6 @@
       description={product.description}
     />
   {/each}
-
+  </div>
+  <button>hello</button>
 </div>

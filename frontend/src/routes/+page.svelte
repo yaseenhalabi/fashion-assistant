@@ -3,9 +3,8 @@
   import ProductContainer from './ProductContainer.svelte'
 </script>
 
-<div>
+<div class="container mx-auto">
   Fashion Assistant by Yaseen Halabi
   <Dropdown />
   <ProductContainer />
-
 </div>
