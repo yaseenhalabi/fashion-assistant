@@ -40,11 +40,12 @@
   }
 
   .product-image {
+    -webkit-user-drag: none;
+    user-select: none;
     display: block;
     width: 100%; 
     object-fit: cover; 
     object-position: center; 
-    background-color: blue;
   }
   
   .product-details {
@@ -92,8 +93,10 @@
   }
 </style>
 
-<div class={`product-card lg:h-80 md:h-auto w-full ${liked? 'liked': ''}`} on:click={toggleLike}>
-  <img class="product-image" src={imageAddress} alt={tags}/>
+<div class={`product-card lg:h-80 md:h-auto w-full ${liked? 'liked': ''}`} >
+  <button class="product-image" on:click={toggleLike}>
+    <img src={imageAddress} alt={tags}/>
+  </button>
   <div class="product-details">
     <a href={url} class="product-tag">{tags}</a>
     <p class="product-price">Price: {price}</p>
