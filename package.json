@@ -8,7 +8,7 @@
     "dev:backend": "cd backend && uvicorn server:app --reload",
     "dev:frontend": "cd frontend && vite",
     "dev:both": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" ",
-    "test": "pytest backend/*"
+    "test": "pytest backend/tests/*"
   },
   "author": "",
   "license": "ISC",
