@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 import scrape
-import aimagic
+import match
 import sample_data1
 import sample_data2
 
@@ -40,11 +40,24 @@ def getProductMatches(
         bot_size: int = Query(None, title="bot_size"),
         color: str = Query(None, title="color"),
         min_condition: str = Query(None, title="min_condition"),
-        min_price: str = Query(None, title="min_price")
-        
+        min_price: str = Query(None, title="min_price"),
+        max_price: str = Query(None, title="max_price")
     ):
     
-    return num_of_items
+    availableProducts = sample_data1.getData()
+    matches = []
+    preferences = {
+        'num_of_items': num_of_items, 
+        'top_size': top_size,
+        'bot_size': bot_size,
+        'color': color,
+        'min_condition': min_condition,
+        'min_price': min_price,
+        'max_price': max_price
+    }
+
+    matches = match.getMatches(preferences=preferences, selectedProducts=prefererred_clothes, availableProducts=availableProducts)
+    return matches
 
 
 @app.get("/api/getProducts")
@@ -52,12 +65,9 @@ def getAvailableProducts(
         num_of_items: int = Query(title="num_of_items")
     ):
 
-    try:
-        dataList = scrape.getAllClothingData(num_of_items) 
-        # dataList = sample_data2.getData()[:num_of_items]
+    # dataList = scrape.getAllClothingData(num_of_items) 
+    dataList = sample_data2.getData()[:num_of_items]
 
-    except:
-        return "there was an error scraping clothes"
 
     return dataList
 
