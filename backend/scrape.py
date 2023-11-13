@@ -67,29 +67,28 @@ def scrapeProduct(url):
     # get the basic data - tags, size, color, condition 
     basic_data = driver.find_element(By.CLASS_NAME, "MainContent_itemLeftColumn__gGKV9")
     
-    data['price'] = sidebar.find_element(By.CLASS_NAME, "Money_root__8lDCT").text
+    data['price'] = sidebar.find_element(By.CLASS_NAME, "Money_root__8lDCT").text[1:]
     data['tags']= basic_data.find_element(By.CLASS_NAME, "Details_title__PpX5v").text
     
     # uses regex to isolate the size in US terms - S, M, L, or XXL
 
     size_info = basic_data.find_element(By.CLASS_NAME, "Details_value__S1aVR").text
 
-    match = re.search(r'US (\w+)', size_info)
-   
+    match = re.search(r'US\s+([A-Z0-9]+)', size_info)
+
     if match:
-        data['size'] = match.group()
+        data['size'] = match.group(1).lower()
+
     else:
-        data['size'] = "none" 
+        data['size'] = 'none'
 
-    data['color'] = basic_data.find_elements(By.CLASS_NAME, "Details_nonMobile__AObqX")[1].text.split()[-1]
+    data['color'] = basic_data.find_elements(By.CLASS_NAME, "Details_nonMobile__AObqX")[1].text.split()[-1].lower()
 
-    data['condition'] = basic_data.find_elements(By.CLASS_NAME, "Details_nonMobile__AObqX")[2].text.split()[-1]
-   
+    data['condition'] = basic_data.find_elements(By.CLASS_NAME, "Details_nonMobile__AObqX")[2].text.split()[-1].lower()
     try:
         data['description'] = " ".join(list(map(lambda x: x.text, sidebar.find_elements(By.CLASS_NAME, "ListingPage-Description-Body-Paragraph"))))
     except:
         data['description'] = "none"
     
-    data['rating'] = "0"
     print("scraped " + url[42:55] + "...")
     return data
