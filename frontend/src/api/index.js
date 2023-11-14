@@ -16,7 +16,7 @@ export const getProducts = async(num_of_items) => {
   return data
 }
 
-export const getProductMatches = async(num_of_items, rated_products) => {
+export const getProductMatches = async(preferences, rated_products) => {
     
   var data
 
@@ -25,7 +25,13 @@ export const getProductMatches = async(num_of_items, rated_products) => {
       {
         headers: {'Content-Type': 'application/json'},
         params: {
-          num_of_items: num_of_items
+          num_of_items: preferences.num_of_items,
+          top_size: preferences.top_size,
+          bot_size: preferences.bot_size,
+          color: preferences.color,
+          min_condition: preferences.min_condition,
+          min_price: preferences.min_price,
+          max_price: preferences.max_price,
         }
       }
     ).then(response => {data = response.data})

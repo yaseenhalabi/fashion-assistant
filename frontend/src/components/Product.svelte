@@ -99,10 +99,10 @@
   </button>
   <div class="product-details">
     <a href={url} class="product-tag">{tags}</a>
-    <p class="product-price">Price: {price}</p>
-    <p class="product-attribute">Size: {size}</p>
-    <p class="product-attribute">Color: {color}</p>
-    <p class="product-attribute">Condition: {condition}</p>
+    <p class="product-price">Price: ${price}</p>
+    <p class="product-attribute">Size: {size == "none"? (size[0].toUpperCase() + size.slice(1)):size.toUpperCase()}</p>
+    <p class="product-attribute">Color: {color[0].toUpperCase() + color.slice(1)}</p>
+    <p class="product-attribute">Condition: {condition[0].toUpperCase() + condition.slice(1)}</p>
     <div class="product-description">
       Description: {description}
     </div>
