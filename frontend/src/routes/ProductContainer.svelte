@@ -6,6 +6,7 @@
   let products = []
   let selectedProducts = []
   let preferences = {
+    
   }
 
   const updatePreference = (key, value) => {
@@ -36,45 +37,58 @@
 <div>
 
   <div class="flex flex-col md:flex-row md:flex-wrap md:justify-between">
-    <input 
-      type="number" 
-      placeholder="Number of Items" 
-      class="p-2 border rounded m-2 flex-1"
-      min="1"
-      on:input={e => updatePreference('num_of_items', e.target.value)} 
-    />
-    <input 
-      type="text" 
-      placeholder="Top Size" 
-      class="p-2 border rounded m-2 flex-1"
-      on:input={e => updatePreference('top_size', e.target.value)} 
-    />
-    <input 
-      type="text" 
-      placeholder="Bottom Size" 
-      class="p-2 border rounded m-2 flex-1"
-      on:input={e => updatePreference('bot_size', e.target.value)} 
-    />
-    <input 
-      type="text" 
-      placeholder="Color" 
-      class="p-2 border rounded m-2 flex-1"
-      on:input={e => updatePreference('color', e.target.value)} 
-    />
-    <input 
-      type="number" 
-      placeholder="Min Price" 
-      class="p-2 border rounded m-2 flex-1"
-      min="0"
-      on:input={e => updatePreference('min_price', e.target.value)} 
-    />
-    <input 
-      type="number" 
-      placeholder="Max Price" 
-      class="p-2 border rounded m-2 flex-1"
-      min="0"
-      on:input={e => updatePreference('max_price', e.target.value)} 
-    />
+    <div class="m-2 ms-0 flex-1">
+      <label class="block text-sm font-medium text-gray-700">Number of Items</label>
+      <input 
+        bind:value={preferences.num_of_items}
+        type="number" 
+        class="mt-1 p-2 border rounded w-full"
+        min="1"
+        on:input={e => updatePreference('num_of_items', e.target.value)} 
+      />
+    </div>
+    <div class="m-2 flex-1">
+      <label class="block text-sm font-medium text-gray-700">Top Size</label>
+      <input 
+        type="text" 
+        class="mt-1 p-2 border rounded w-full"
+        on:input={e => updatePreference('top_size', e.target.value)} 
+      />
+    </div>
+    <div class="m-2 flex-1">
+      <label class="block text-sm font-medium text-gray-700">Bottom Size</label>
+      <input 
+        type="text" 
+        class="mt-1 p-2 border rounded w-full"
+        on:input={e => updatePreference('bot_size', e.target.value)} 
+      />
+    </div>
+    <div class="m-2 flex-1">
+      <label class="block text-sm font-medium text-gray-700">Color</label>
+      <input 
+        type="text" 
+        class="mt-1 p-2 border rounded w-full"
+        on:input={e => updatePreference('color', e.target.value)} 
+      />
+    </div>
+    <div class="m-2 flex-1">
+      <label class="block text-sm font-medium text-gray-700">Min Price</label>
+      <input 
+        type="number" 
+        class="mt-1 p-2 border rounded w-full"
+        min="0"
+        on:input={e => updatePreference('min_price', e.target.value)} 
+      />
+    </div>
+    <div class="m-2 me-0 flex-1">
+      <label class="block text-sm font-medium text-gray-700">Max Price</label>
+      <input 
+        type="number" 
+        class="mt-1 p-2 border rounded w-full"
+        min="0"
+        on:input={e => updatePreference('max_price', e.target.value)} 
+      />
+    </div>
   </div>
   <button 
     on:click={fetchProductMatches} 
