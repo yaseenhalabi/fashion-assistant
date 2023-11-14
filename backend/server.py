@@ -65,11 +65,11 @@ def getAvailableProducts(
         num_of_items: int = Query(title="num_of_items")
     ):
 
-    # dataList = scrape.getAllClothingData(num_of_items) 
-    dataList = sample_data1.getData()[:num_of_items]
+    productObjects = scrape.getAllClothingData(num_of_items) 
+    # dataList = sample_data1.getData()[:num_of_items]
 
 
-    return dataList
+    return productObjects
 
 @app.get("/")
 def home():

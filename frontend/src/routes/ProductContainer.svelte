@@ -5,20 +5,21 @@
   
   let products = []
   let selectedProducts = []
-  let preferences = {}
+  let preferences = {
+    num_of_items: 20
+  }
 
   const updatePreference = (key, value) => {
     if (value.trim() !== '') {
       preferences = { ...preferences, [key]: value };
     } else {
-      // If the value is empty, remove the key from preferences
       const {[key]: _, ...rest} = preferences;
       preferences = rest;
     }
   };
 
   onMount(async () => {
-    products = await getProducts(10); // Load 10 products on component mount, for example
+    products = await getProductMatches(preferences, products); 
   });
 
   const fetchProductMatches = async() => {
