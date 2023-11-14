@@ -5,9 +5,7 @@
   
   let products = []
   let selectedProducts = []
-  let preferences = {
-    
-  }
+  let preferences = {}
 
   const updatePreference = (key, value) => {
     preferences = { ...preferences, [key]: value };
@@ -31,6 +29,11 @@
     console.log(selectedProducts)
   }
 
+  const handleEnterPress = (event) => {
+    if (event.key === 'Enter') {
+      fetchProductMatches();
+    }
+  };
 
 </script>
 
@@ -45,6 +48,7 @@
         class="mt-1 p-2 border rounded w-full"
         min="1"
         on:input={e => updatePreference('num_of_items', e.target.value)} 
+        on:keyup={handleEnterPress}
       />
     </div>
     <div class="m-2 flex-1">
@@ -53,6 +57,7 @@
         type="text" 
         class="mt-1 p-2 border rounded w-full"
         on:input={e => updatePreference('top_size', e.target.value)} 
+        on:keyup={handleEnterPress}
       />
     </div>
     <div class="m-2 flex-1">
@@ -61,6 +66,7 @@
         type="text" 
         class="mt-1 p-2 border rounded w-full"
         on:input={e => updatePreference('bot_size', e.target.value)} 
+        on:keyup={handleEnterPress}
       />
     </div>
     <div class="m-2 flex-1">
@@ -69,6 +75,7 @@
         type="text" 
         class="mt-1 p-2 border rounded w-full"
         on:input={e => updatePreference('color', e.target.value)} 
+        on:keyup={handleEnterPress}
       />
     </div>
     <div class="m-2 flex-1">
@@ -78,6 +85,7 @@
         class="mt-1 p-2 border rounded w-full"
         min="0"
         on:input={e => updatePreference('min_price', e.target.value)} 
+        on:keyup={handleEnterPress}
       />
     </div>
     <div class="m-2 me-0 flex-1">
@@ -87,6 +95,7 @@
         class="mt-1 p-2 border rounded w-full"
         min="0"
         on:input={e => updatePreference('max_price', e.target.value)} 
+        on:keyup={handleEnterPress}
       />
     </div>
   </div>
