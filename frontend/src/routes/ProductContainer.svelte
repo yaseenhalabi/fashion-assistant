@@ -8,7 +8,13 @@
   let preferences = {}
 
   const updatePreference = (key, value) => {
-    preferences = { ...preferences, [key]: value };
+    if (value.trim() !== '') {
+      preferences = { ...preferences, [key]: value };
+    } else {
+      // If the value is empty, remove the key from preferences
+      const {[key]: _, ...rest} = preferences;
+      preferences = rest;
+    }
   };
 
   onMount(async () => {
@@ -43,6 +49,7 @@
     <div class="m-2 ms-0 flex-1">
       <label class="block text-sm font-medium text-gray-700">Number of Items</label>
       <input 
+        placeholder="10"
         bind:value={preferences.num_of_items}
         type="number" 
         class="mt-1 p-2 border rounded w-full"
@@ -54,6 +61,7 @@
     <div class="m-2 flex-1">
       <label class="block text-sm font-medium text-gray-700">Top Size</label>
       <input 
+        placeholder="any"
         type="text" 
         class="mt-1 p-2 border rounded w-full"
         on:input={e => updatePreference('top_size', e.target.value)} 
@@ -63,6 +71,7 @@
     <div class="m-2 flex-1">
       <label class="block text-sm font-medium text-gray-700">Bottom Size</label>
       <input 
+        placeholder="any"
         type="text" 
         class="mt-1 p-2 border rounded w-full"
         on:input={e => updatePreference('bot_size', e.target.value)} 
@@ -72,6 +81,7 @@
     <div class="m-2 flex-1">
       <label class="block text-sm font-medium text-gray-700">Color</label>
       <input 
+        placeholder="any"
         type="text" 
         class="mt-1 p-2 border rounded w-full"
         on:input={e => updatePreference('color', e.target.value)} 
@@ -81,6 +91,7 @@
     <div class="m-2 flex-1">
       <label class="block text-sm font-medium text-gray-700">Min Price</label>
       <input 
+        placeholder="any"
         type="number" 
         class="mt-1 p-2 border rounded w-full"
         min="0"
@@ -91,6 +102,7 @@
     <div class="m-2 me-0 flex-1">
       <label class="block text-sm font-medium text-gray-700">Max Price</label>
       <input 
+        placeholder="any"
         type="number" 
         class="mt-1 p-2 border rounded w-full"
         min="0"

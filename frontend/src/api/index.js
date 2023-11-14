@@ -24,15 +24,7 @@ export const getProductMatches = async(preferences, rated_products) => {
     await axios.post("http://localhost:8000/api/getProductMatches/", rated_products, 
       {
         headers: {'Content-Type': 'application/json'},
-        params: {
-          num_of_items: preferences.num_of_items,
-          top_size: preferences.top_size,
-          bot_size: preferences.bot_size,
-          color: preferences.color,
-          min_condition: preferences.min_condition,
-          min_price: preferences.min_price,
-          max_price: preferences.max_price,
-        }
+        params: preferences
       }
     ).then(response => {data = response.data})
   
