@@ -66,7 +66,7 @@ def getAvailableProducts(
     ):
 
     # dataList = scrape.getAllClothingData(num_of_items) 
-    dataList = sample_data2.getData()[:num_of_items]
+    dataList = sample_data1.getData()[:num_of_items]
 
 
     return dataList
