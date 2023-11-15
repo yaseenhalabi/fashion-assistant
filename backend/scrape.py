@@ -21,10 +21,19 @@ def getAllClothingData(num_of_items):
     links = getProductLinks('https://www.grailed.com/categories/all', num_of_items)
 
     listOfData = []
-
+    count = 1
     for link in links:
-        listOfData.append(scrapeProduct(link))
-
+    
+        try:
+            listOfData.append(scrapeProduct(link))
+            print("[" + str(count) + "]" + " scraped " + link[42:55] + "...")
+            count += 1
+        except:
+            print("Error! Could not scrape " + link[42:55] + "...")
+    
+    # removes any duplicates
+    listOfData = [dict(t) for t in {tuple(d.items()) for d in listOfData}]
+    print("finished scraping " + str(len(listOfData)) + " products")
     return listOfData
 
 # returns list of links to products
@@ -42,6 +51,7 @@ def getProductLinks(url: str, num_of_items: int):
         ActionChains(driver)\
             .scroll_by_amount(0, 8000)\
             .perform()
+        print("scrolled down page for more items")
         time.sleep(3)
      
     try: # driver.save_screenshot('screenshot.png')
@@ -90,5 +100,4 @@ def scrapeProduct(url):
     except:
         data['description'] = "none"
     
-    print("scraped " + url[42:55] + "...")
     return data
