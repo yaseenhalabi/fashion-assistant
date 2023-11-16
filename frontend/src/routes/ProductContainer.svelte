@@ -8,6 +8,10 @@
   let preferences = {
     num_of_items: 20
   }
+  let isOpen = false
+  const toggleOpen = () => {
+    isOpen = !isOpen
+  }
 
   const updatePreference = (key, value) => {
     if (value.trim() !== '') {
@@ -45,8 +49,12 @@
 </script>
 
 <div>
+  
+  <button class="flex items-center cursor-pointer select-none" on:click={toggleOpen}>
+    <span class="mr-2">Preferences</span>
+  </button>
 
-  <div class="flex flex-col md:flex-row md:flex-wrap md:justify-between">
+  <div class={`flex flex-col md:flex-row md:flex-wrap md:justify-between ${isOpen ? 'max-h-auto' : 'hidden'}`}>
     <div class="m-2 ms-0 flex-1">
       <label class="block text-sm font-medium text-gray-700">Number of Items</label>
       <input 
