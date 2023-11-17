@@ -1,4 +1,4 @@
-
+import random
 
 def meetsPreferences(product, preferences):
     if preferences['bot_size'] != None or preferences['top_size'] != None:
@@ -29,7 +29,7 @@ def getMatches(selectedProducts, availableProducts, preferences):
     for product in availableProducts:
         if meetsPreferences(product, preferences):
             list_of_matching_products.append(product)
-
+    random.shuffle(list_of_matching_products)
     return list_of_matching_products[:preferences['num_of_items']]
 
 
