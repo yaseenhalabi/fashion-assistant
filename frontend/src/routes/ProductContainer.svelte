@@ -8,7 +8,7 @@
   let preferences = {
     num_of_items: 20
   }
-  let isOpen = false
+  let isOpen = true
   const toggleOpen = () => {
     isOpen = !isOpen
   }
@@ -52,7 +52,7 @@
 <div>
   
   <button class="flex items-center cursor-pointer select-none" on:click={toggleOpen}>
-    <span class="mr-2">Preferences</span>
+    <span class="underline mr-2">Preferences</span>
   </button>
 
   <div class={`flex flex-col md:flex-row md:flex-wrap md:justify-between ${isOpen ? 'max-h-auto' : 'hidden'}`}>

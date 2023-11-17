@@ -4,7 +4,7 @@
 </script>
 
 <div class="container mx-auto">
-  Fashion Assistant by Yaseen Halabi
+  <h1 class="">Fashion Assistant by Yaseen Halabi</h1>
   <Dropdown />
   <ProductContainer />
 </div>
