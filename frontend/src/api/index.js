@@ -16,12 +16,12 @@ export const getProducts = async(num_of_items) => {
   return data
 }
 
-export const getProductMatches = async(preferences, rated_products) => {
+export const getProductMatches = async(preferences, selected_images) => {
     
   var data
 
   try {
-    await axios.post("http://localhost:8000/api/getProductMatches/", rated_products, 
+    await axios.post("http://localhost:8000/api/getProductMatches/", selected_images, 
       {
         headers: {'Content-Type': 'application/json'},
         params: preferences

@@ -4,7 +4,7 @@
   import { onMount } from 'svelte';
   
   let products = []
-  let selectedProducts = []
+  let selected_images = []
   let preferences = {
     num_of_items: 20
   }
@@ -24,21 +24,21 @@
   };
 
   onMount(async () => {
-    products = await getProductMatches(preferences, products); 
+    products = await getProductMatches(preferences, selected_images); 
   });
 
   const fetchProductMatches = async() => {
-    products = await getProductMatches(preferences, products)
+    products = await getProductMatches(preferences, selected_images)
   }
 
   const addSelectedProduct = (product) => {
-    selectedProducts.push(product)
-    console.log(selectedProducts)
+    selected_images.push(product['image'])
+    console.log(selected_images)
   }
 
   const removeSelectedProduct = (product) => {
-    selectedProducts = selectedProducts.filter(item => item.url !== product.url);
-    console.log(selectedProducts)
+    selected_images = selected_images.filter(item => item !== product['image']);
+    console.log(selected_images)
   }
 
   const handleEnterPress = (event) => {
