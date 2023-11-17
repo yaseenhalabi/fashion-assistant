@@ -2,7 +2,7 @@
 
 def meetsPreferences(product, preferences):
     if preferences['bot_size'] != None or preferences['top_size'] != None:
-        if product['size'] != preferences['bot_size'] and product['size'] != preferences['top_size']:
+        if product['size'] != str(preferences['bot_size']) and product['size'] != preferences['top_size']:
             return False
 
     if preferences['color'] != None:
