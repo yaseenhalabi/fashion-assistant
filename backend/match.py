@@ -22,13 +22,20 @@ def meetsPreferences(product, preferences):
             return False
     return True
 
-def getMatches(selected_images, availableProducts, preferences):
+
+def sortByRelevance(available_products, selected_images):
+    sorted_products = []
+    return sorted_products
+
+def getMatches(selected_images, available_products, preferences):
 
     list_of_matching_products = []
 
-    for product in availableProducts:
+    for product in available_products:
         if meetsPreferences(product, preferences):
             list_of_matching_products.append(product)
+            
+    # list_of_matching_products = sortByRelavance(available_products=available_products, selected_images=selected_images)
 
     # Randomly shuffling items to make each page refresh unique
     random.shuffle(list_of_matching_products)

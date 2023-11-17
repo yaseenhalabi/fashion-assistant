@@ -29,7 +29,7 @@ def getProductMatches(
         max_price: str = Query(None, title="max_price")
     ):
     
-    availableProducts = sample_data.getData()
+    available_products = sample_data.getData()
     matches = []
     preferences = {
         'num_of_items': num_of_items, 
@@ -41,7 +41,7 @@ def getProductMatches(
         'max_price': max_price
     }
 
-    matches = match.getMatches(preferences=preferences, selected_images=selected_images, availableProducts=availableProducts)
+    matches = match.getMatches(preferences=preferences, selected_images=selected_images, available_products=available_products)
     return matches
 
 # This will likely not be used for real time product searching, only to get data for storing
