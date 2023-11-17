@@ -13,6 +13,7 @@
     isOpen = !isOpen
   }
 
+  // removes the key from preferences if key.value == ''
   const updatePreference = (key, value) => {
     if (value.trim() !== '') {
       preferences = { ...preferences, [key]: value };
@@ -56,7 +57,7 @@
 
   <div class={`flex flex-col md:flex-row md:flex-wrap md:justify-between ${isOpen ? 'max-h-auto' : 'hidden'}`}>
     <div class="m-2 ms-0 flex-1">
-      <label class="block text-sm font-medium text-gray-700">Number of Items</label>
+      <label for="num_of_items" class="block text-sm font-medium text-gray-700">Number of Items</label>
       <input 
         placeholder="10"
         bind:value={preferences.num_of_items}
@@ -68,7 +69,7 @@
       />
     </div>
     <div class="m-2 flex-1">
-      <label class="block text-sm font-medium text-gray-700">Top Size</label>
+      <label for="top_size" class="block text-sm font-medium text-gray-700">Top Size</label>
       <input 
         placeholder="any"
         type="text" 
@@ -78,7 +79,7 @@
       />
     </div>
     <div class="m-2 flex-1">
-      <label class="block text-sm font-medium text-gray-700">Bottom Size</label>
+      <label for="bot_size" class="block text-sm font-medium text-gray-700">Bottom Size</label>
       <input 
         placeholder="any"
         type="text" 
@@ -88,7 +89,7 @@
       />
     </div>
     <div class="m-2 flex-1">
-      <label class="block text-sm font-medium text-gray-700">Color</label>
+      <label for="color" class="block text-sm font-medium text-gray-700">Color</label>
       <input 
         placeholder="any"
         type="text" 
@@ -98,7 +99,7 @@
       />
     </div>
     <div class="m-2 flex-1">
-      <label class="block text-sm font-medium text-gray-700">Min Price</label>
+      <label for="min_price" class="block text-sm font-medium text-gray-700">Min Price</label>
       <input 
         placeholder="any"
         type="number" 
@@ -109,7 +110,7 @@
       />
     </div>
     <div class="m-2 me-0 flex-1">
-      <label class="block text-sm font-medium text-gray-700">Max Price</label>
+      <label for="max_price" class="block text-sm font-medium text-gray-700">Max Price</label>
       <input 
         placeholder="any"
         type="number" 

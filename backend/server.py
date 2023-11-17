@@ -16,9 +16,6 @@ app.add_middleware(
     allow_headers=["*"],  
 )
 
-
-
-
 class PrefererredClothes(BaseModel):
     url: str
     price: str 
@@ -28,8 +25,6 @@ class PrefererredClothes(BaseModel):
     color: str
     description: str 
     image: str
-
-
 
 @app.post("/api/getProductMatches")
 def getProductMatches(
@@ -58,15 +53,13 @@ def getProductMatches(
     matches = match.getMatches(preferences=preferences, selectedProducts=prefererred_clothes, availableProducts=availableProducts)
     return matches
 
-
+# This will likely not be used for real time product searching, only to get data for storing
 @app.get("/api/getProducts")
 def getAvailableProducts(
         num_of_items: int = Query(title="num_of_items")
     ):
 
     productObjects = scrape.getAllClothingData(num_of_items) 
-    # dataList = sample_data1.getData()[:num_of_items]
-
 
     return productObjects
 

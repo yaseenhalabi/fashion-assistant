@@ -29,6 +29,7 @@ def getMatches(selectedProducts, availableProducts, preferences):
     for product in availableProducts:
         if meetsPreferences(product, preferences):
             list_of_matching_products.append(product)
+    # Randomly shuffling items to make each page refresh unique
     random.shuffle(list_of_matching_products)
     return list_of_matching_products[:preferences['num_of_items']]
 
