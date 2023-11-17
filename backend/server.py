@@ -4,9 +4,8 @@ from pydantic import BaseModel
 
 import scrape
 import match
-import sample_data1
-import sample_data2
-
+import sample_data
+#
 app = FastAPI()
 
 app.add_middleware(
@@ -44,7 +43,7 @@ def getProductMatches(
         max_price: str = Query(None, title="max_price")
     ):
     
-    availableProducts = sample_data1.getData()
+    availableProducts = sample_data.getData()
     matches = []
     preferences = {
         'num_of_items': num_of_items, 
