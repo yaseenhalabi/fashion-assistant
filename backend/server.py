@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -49,8 +49,10 @@ def getProductMatches(
 def getAvailableProducts(
         num_of_items: int = Query(title="num_of_items")
     ):
-
-    productObjects = scrape.getAllClothingData(num_of_items) 
+    try:
+        productObjects = scrape.getAllClothingData(num_of_items) 
+    except:
+        raise HTTPException(status_code=500, detail="There was an error scraping")
 
     return productObjects
 
@@ -58,4 +60,4 @@ def getAvailableProducts(
 def home():
     return {"message": "hello world"}
 
-
+    
