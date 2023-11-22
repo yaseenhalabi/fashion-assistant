@@ -2,9 +2,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains 
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
 import math
 import time 
@@ -23,13 +22,16 @@ def getAllClothingData(num_of_items):
     listOfData = []
     count = 1
     for link in links:
-    
-        try:
-            listOfData.append(scrapeProduct(link))
-            print("[" + str(count) + "]" + " scraped " + link[42:55] + "...")
-            count += 1
-        except:
-            print("Error! Could not scrape " + link[42:55] + "...")
+        if link is not None:
+            try:
+                listOfData.append(scrapeProduct(link))
+                print("[" + str(count) + "]" + " scraped " + link[42:55] + "...")
+                count += 1
+            except:
+                # If 'link' is None, the slicing will not be attempted.
+                print("Error! Could not scrape the product.")
+        else:
+            print("Error! Encountered a 'None' link.")
     
     # removes any duplicates
     listOfData = [dict(t) for t in {tuple(d.items()) for d in listOfData}]
@@ -37,30 +39,32 @@ def getAllClothingData(num_of_items):
     return listOfData
 
 # returns list of links to products
+# returns list of links to products
 def getProductLinks(url: str, num_of_items: int):
     
     driver.get(url) 
+    links = []
+    try:
+        WebDriverWait(driver, 2).until(     
+            EC.presence_of_element_located((By.CLASS_NAME, "feed")) 
+        )
 
-    wait = WebDriverWait(driver, 2).until(     
-      EC.presence_of_element_located((By.CLASS_NAME, "feed")) 
-    )
-
-    # scroll to bottom to see more products
-    num_of_scrolls = math.ceil((num_of_items-40)/40)  
-    for i in range(num_of_scrolls):  
-        ActionChains(driver)\
-            .scroll_by_amount(0, 8000)\
-            .perform()
-        print("scrolled down page for more items")
-        time.sleep(3)
+        # scroll to bottom to see more products
+        num_of_scrolls = math.ceil((num_of_items-40)/40)  
+        for i in range(num_of_scrolls):  
+            ActionChains(driver)\
+                .scroll_by_amount(0, 8000)\
+                .perform()
+            print("scrolled down page for more items")
+            time.sleep(3)
      
-    try: # driver.save_screenshot('screenshot.png')
         feed = driver.find_element(By.CLASS_NAME, "feed")
         feed_items = feed.find_elements(By.CLASS_NAME, "listing-item-link")
-        links = list(map(lambda item: item.get_attribute("href"), feed_items[:num_of_items]))
-        return links
-    except OSError:
-        return error
+        links = [item.get_attribute("href") for item in feed_items[:num_of_items]]
+    except Exception as e:  # Catch any exception
+        print(f"Failed to get product links: {e}")
+
+    return links
 
 
 # returns dictionary of product data 
