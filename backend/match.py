@@ -1,23 +1,23 @@
 import random
 
 def meetsPreferences(product, preferences):
-    if preferences['bot_size'] != None or preferences['top_size'] != None:
-        if product['size'] != str(preferences['bot_size']) and product['size'] != preferences['top_size']:
+    if preferences['bot_size'] is not None or preferences['top_size'] is not None: 
+        if product['size'] is not str(preferences['bot_size']) and product['size'] is not preferences['top_size']:
             return False
 
-    if preferences['color'] != None:
-        if (product['color'] != preferences['color']):
+    if preferences['color'] is not None:
+        if (product['color'] is not preferences['color']):
             return False
     
-    if preferences['min_condition'] != None:
+    if preferences['min_condition'] is not None:
         if preferences['min_condition'] == 'new' and product['condition'] == 'used':
             return False
     
-    if preferences['min_price'] != None:
+    if preferences['min_price'] is not None:
         if int(preferences['min_price']) > int(product['price']):
             return False
      
-    if preferences['max_price'] != None:
+    if preferences['max_price'] is not None:
         if int(preferences['max_price']) < int(product['price']):
             return False
     return True
