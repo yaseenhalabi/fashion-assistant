@@ -13,9 +13,8 @@ app.add_middleware(
 )
 
 @app.post("/api/getProducts")
-
 def getProducts(
-    # This function is the main function that will be called by the frontend to get the products that match the user's preferences.
+    # frontend calls this to get the products that match the user's preferences.
     # Returns: a list of products that match the user's preferences.
         selected_images: list[str], 
         num_of_items: int = Query(None, title="num_of_items"),
@@ -36,7 +35,7 @@ def getProducts(
         'max_price': max_price
     }
     all_products = sample_data.getData() # whatever data we are tagging
-    matched_with_preferences = match.getMatches(preferences=preferences, selected_images=selected_images, available_products=all_products)
+    matched_with_preferences = match.getMatches(preferences=preferences, available_products=all_products)
     return matched_with_preferences
 
 @app.get("/")

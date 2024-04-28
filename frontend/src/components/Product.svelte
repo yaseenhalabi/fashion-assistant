@@ -1,15 +1,7 @@
 <!-- Product.svelte -->
+<!-- Displays an individual product card-->
 <script>
-  export let imageAddress;
-  export let url;
-  export let tags;
-  export let price;
-  export let size;
-  export let color;
-  export let condition;
-  export let description;
-  export let addSelectedProduct;
-  export let removeSelectedProduct;
+  export let imageAddress, url, tags, price, size, color, condition, description, addSelectedProduct, removeSelectedProduct;
 
   let liked = false
 
@@ -34,11 +26,9 @@
     display: flex;
     flex-direction: column;
   }
-
   .liked {
     border: #5a67d8 4px solid;
   }
-
   .product-image {
     -webkit-user-drag: none;
     user-select: none;
@@ -47,46 +37,38 @@
     object-fit: cover; 
     object-position: center; 
   }
-  
   .product-details {
     width: max-width;
     padding: 16px;
   }
-
   .product-tag {
     color: #5a67d8; 
     font-weight: bold;
     text-decoration: none; 
     margin-bottom: 8px; 
   }
-
   .product-price {
     font-size: 1.25rem; 
     font-weight: bold;
     margin-bottom: 16px; 
   }
-
   .product-attribute {
     margin-bottom: 8px; 
   }
-
   .product-description {
     max-height: 100px; 
     overflow-y: auto; 
     border-top: 1px solid #e2e8f0; 
     padding-top: 8px; 
   }
-
   
   @media (min-width: 768px) {
     .product-card {
       flex-direction: row; 
     }
-
     .product-image {
       max-width: 50%;
     }
-
     .product-details {
       max-width: 50%;
     }

@@ -122,14 +122,14 @@
       />
     </div>
   </div>
-  <!-- lowballer mode takes all the prices and sets them to the lowest price you can offer a seller -->
 
+  <!-- lowballer mode takes all the prices and sets them to the lowest price you can offer a seller -->
   <div>Lowballer Mode</div>
   <button class='py-1 px-3 {lowerballer ? "bg-green-200" : "bg-red-200"}' on:click={toggleLowballer}>
     {lowerballer ? "on" : "off"}
   </button>
-  <!-- button to fetch products -->
 
+  <!-- button to fetch products -->
   <button 
     on:click={fetchProductMatches} 
     class="bg-blue-500 text-white hover:bg-blue-700 py-2 w-full font-bold my-2">
