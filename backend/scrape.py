@@ -8,100 +8,82 @@ from selenium.webdriver.chrome.options import Options
 import math
 import time 
 import re
+import csv
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36")
-
 driver = webdriver.Chrome(options=chrome_options)
 
 def getAllClothingData(num_of_items):
-    
-    links = getProductLinks('https://www.grailed.com/categories/all', num_of_items)
-
+    """
+    runs the scraping functions to get all the clothing data
+    returns: a list of dictionaries containing the data
+    """
     listOfData = []
+    links = getProductLinks('https://www.grailed.com/categories/all', num_of_items)
     count = 1
     for link in links:
-        if link is not None:
-            try:
-                listOfData.append(scrapeProduct(link))
-                print("[" + str(count) + "]" + " scraped " + link[42:55] + "...")
-                count += 1
-            except:
-                # If 'link' is None, the slicing will not be attempted.
-                print("Error! Could not scrape the product.")
-        else:
-            print("Error! Encountered a 'None' link.")
-    
-    # removes any duplicates
-    listOfData = [dict(t) for t in {tuple(d.items()) for d in listOfData}]
+        try:
+            listOfData.append(scrapeProduct(link))
+            print("[" + str(count) + "]" + " scraped " + link[42:55] + "...")
+            count += 1
+        except:
+            # If 'link' is None, the slicing will not be attempted.
+            print("Error! Could not scrape the product.")
+
     print("finished scraping " + str(len(listOfData)) + " products")
     return listOfData
 
-# returns list of links to products
-# returns list of links to products
 def getProductLinks(url: str, num_of_items: int):
-    
-    driver.get(url) 
+    """
+    Scrapes the product links from given url.
+    returns: string list of urls
+    """
     links = []
-    try:
-        WebDriverWait(driver, 2).until(     
-            EC.presence_of_element_located((By.CLASS_NAME, "feed")) 
-        )
-
-        # scroll to bottom to see more products
-        num_of_scrolls = math.ceil((num_of_items-40)/40)  
-        for i in range(num_of_scrolls):  
-            ActionChains(driver)\
-                .scroll_by_amount(0, 8000)\
-                .perform()
-            print("scrolled down page for more items")
-            time.sleep(3)
-     
-        feed = driver.find_element(By.CLASS_NAME, "feed")
-        feed_items = feed.find_elements(By.CLASS_NAME, "listing-item-link")
-        links = [item.get_attribute("href") for item in feed_items[:num_of_items]]
-    except Exception as e:  # Catch any exception
-        print(f"Failed to get product links: {e}")
-
+    driver.get(url) 
+    num_of_scrolls = math.ceil((num_of_items-40)/40)  
+    for i in range(num_of_scrolls):  
+        ActionChains(driver)\
+            .scroll_by_amount(0, 8000)\
+            .perform()
+        print("scrolled down page for more items")
+        time.sleep(3)
+    feed = driver.find_element(By.CLASS_NAME, "feed")
+    feed_items = feed.find_elements(By.CLASS_NAME, "listing-item-link")
+    links = [item.get_attribute("href") for item in feed_items[:num_of_items]] 
     return links
 
 
-# returns dictionary of product data 
 def scrapeProduct(url):
-    
+    """
+    Scrapes the product page for the following data:
+    image-url, price, tags, size, color, condition
+    returns: a dictionary of the data
+    """
     data = {}
-    
     data['url'] = url 
     driver.get(url)
-   
     data['image'] = driver.find_element(By.CLASS_NAME, "Photo_photo__9PBT1").find_element(By.TAG_NAME, "img").get_attribute("src")
-    # the sidebar contains all the good stuff
     sidebar = driver.find_element(By.CLASS_NAME, "MainContent_sidebar__29G6s")
-    # get the basic data - tags, size, color, condition 
     basic_data = driver.find_element(By.CLASS_NAME, "MainContent_itemLeftColumn__gGKV9")
-    
     data['price'] = sidebar.find_element(By.CLASS_NAME, "Money_root__8lDCT").text[1:]
     data['tags']= basic_data.find_element(By.CLASS_NAME, "Details_title__PpX5v").text
-    
-    # uses regex to isolate the size in US terms - S, M, L, or XXL
-
     size_info = basic_data.find_element(By.CLASS_NAME, "Details_value__S1aVR").text
-
     match = re.search(r'US\s+([A-Z0-9]+)', size_info)
-
-    if match:
-        data['size'] = match.group(1).lower()
-
-    else:
-        data['size'] = 'none'
-
+    data['size'] = match.group(1).lower() if match else 'none'
     data['color'] = basic_data.find_elements(By.CLASS_NAME, "Details_nonMobile__AObqX")[1].text.split()[-1].lower()
-
     data['condition'] = basic_data.find_elements(By.CLASS_NAME, "Details_nonMobile__AObqX")[2].text.split()[-1].lower()
-    try:
-        data['description'] = " ".join(list(map(lambda x: x.text, sidebar.find_elements(By.CLASS_NAME, "ListingPage-Description-Body-Paragraph"))))
-    except:
-        data['description'] = "none"
-    
     return data
+
+
+data = getAllClothingData(45)
+
+keys = data[0].keys()
+
+with open('clothing_data.csv', 'w', newline='') as file:
+    writer = csv.DictWriter(file, fieldnames=keys)
+    writer.writeheader()
+    writer.writerows(data)
+
+print("CSV file created successfully.")

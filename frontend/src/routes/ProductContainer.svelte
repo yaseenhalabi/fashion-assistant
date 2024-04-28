@@ -1,16 +1,19 @@
 <script>
   import Product from "../components/Product.svelte"
-  import { getProducts, getProductMatches } from "../api/index.js"
+  import { getProductMatches } from "../api/index.js"
   import { onMount } from 'svelte';
   
   let products = []
-  let selected_images = []
-  let preferences = {
-    num_of_items: 20
-  }
+  let selected_images = [] // hopefully will be used to tag selected images for ML  
+  let preferences = { num_of_items: 20 }
   let isOpen = true
+  let lowerballer = false
+
   const toggleOpen = () => {
     isOpen = !isOpen
+  }
+  const toggleLowballer = () => {
+    lowerballer = !lowerballer
   }
 
   // removes the key from preferences if key.value == ''
@@ -33,12 +36,10 @@
 
   const addSelectedProduct = (product) => {
     selected_images.push(product['image'])
-    console.log(selected_images)
   }
 
   const removeSelectedProduct = (product) => {
     selected_images = selected_images.filter(item => item !== product['image']);
-    console.log(selected_images)
   }
 
   const handleEnterPress = (event) => {
@@ -54,7 +55,7 @@
   <button class="flex items-center cursor-pointer select-none" on:click={toggleOpen}>
     <span class="underline mr-2">Preferences</span>
   </button>
-
+  <!-- these are different inputs to adjust clothing preferences -->
   <div class={`flex flex-col md:flex-row md:flex-wrap md:justify-between ${isOpen ? 'max-h-auto' : 'hidden'}`}>
     <div class="m-2 ms-0 flex-1">
       <label for="num_of_items" class="block text-sm font-medium text-gray-700">Number of Items</label>
@@ -121,25 +122,34 @@
       />
     </div>
   </div>
+  <!-- lowballer mode takes all the prices and sets them to the lowest price you can offer a seller -->
+
+  <div>Lowballer Mode</div>
+  <button class='py-1 px-3 {lowerballer ? "bg-green-200" : "bg-red-200"}' on:click={toggleLowballer}>
+    {lowerballer ? "on" : "off"}
+  </button>
+  <!-- button to fetch products -->
+
   <button 
     on:click={fetchProductMatches} 
     class="bg-blue-500 text-white hover:bg-blue-700 py-2 w-full font-bold my-2">
     Find Matches
   </button>
+
   <div class="grid md:grid-cols-2 gap-4">
-  {#each products as product (product.url)}
-    <Product
-      addSelectedProduct={() => addSelectedProduct(product)}
-      removeSelectedProduct={() => removeSelectedProduct(product)}
-      imageAddress={product.image} 
-      url={product.url} 
-      tags={product.tags} 
-      price={product.price}
-      size={product.size}
-      color={product.color}
-      condition={product.condition}
-      description={product.description}
-    />
-  {/each}
+    {#each products as product (product.url)}
+      <Product
+        addSelectedProduct={() => addSelectedProduct(product)}
+        removeSelectedProduct={() => removeSelectedProduct(product)}
+        imageAddress={product.image} 
+        url={product.url} 
+        tags={product.tags} 
+        price={parseInt(product.price * (lowerballer ? 0.6 : 1))}
+        size={product.size}
+        color={product.color}
+        condition={product.condition}
+        description={product.description}
+      />
+    {/each}
   </div>
 </div>

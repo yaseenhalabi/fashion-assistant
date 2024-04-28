@@ -1,11 +1,9 @@
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
-import scrape
 import match
 import sample_data
-#
-app = FastAPI()
 
+app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -14,9 +12,11 @@ app.add_middleware(
     allow_headers=["*"],  
 )
 
+@app.post("/api/getProducts")
 
-@app.post("/api/getProductMatches")
-def getProductMatches(
+def getProducts(
+    # This function is the main function that will be called by the frontend to get the products that match the user's preferences.
+    # Returns: a list of products that match the user's preferences.
         selected_images: list[str], 
         num_of_items: int = Query(None, title="num_of_items"),
         top_size: str = Query(None, title="top_size"),
@@ -26,9 +26,6 @@ def getProductMatches(
         min_price: str = Query(None, title="min_price"),
         max_price: str = Query(None, title="max_price")
     ):
-    
-    available_products = sample_data.getData()
-    matches = []
     preferences = {
         'num_of_items': num_of_items, 
         'top_size': top_size,
@@ -38,22 +35,14 @@ def getProductMatches(
         'min_price': min_price,
         'max_price': max_price
     }
-
-    matches = match.getMatches(preferences=preferences, selected_images=selected_images, available_products=available_products)
-    return matches
-
-# This will likely not be used for real time product searching, only to get data for storing
-@app.get("/api/getProducts")
-def getAvailableProducts(
-        num_of_items: int = Query(title="num_of_items")
-    ):
-
-    productObjects = scrape.getAllClothingData(num_of_items) 
-
-    return productObjects
+    all_products = sample_data.getData() # whatever data we are tagging
+    matched_with_preferences = match.getMatches(preferences=preferences, selected_images=selected_images, available_products=all_products)
+    return matched_with_preferences
 
 @app.get("/")
 def home():
     return {"message": "hello world"}
+
+
 
 

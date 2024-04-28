@@ -22,19 +22,10 @@ def meetsPreferences(product, preferences):
             return False
     return True
 
-
-def sortByRelevance(available_products, selected_images):
-    return []
-
-def getMatches(selected_images, available_products, preferences):
+def getMatches(available_products, preferences):
 
     list_of_matching_products = []
-
-    for product in available_products:
-        if meetsPreferences(product, preferences):
-            list_of_matching_products.append(product)
-            
-    # Randomly shuffling items to make each page refresh unique
+    list_of_matching_products = [product for product in available_products if meetsPreferences(product, preferences)]
     random.shuffle(list_of_matching_products)
     return list_of_matching_products[:preferences['num_of_items']]
 
