@@ -1,5 +1,7 @@
 # fashion-assistant
 grailed webscraper that uses ML to recommend clothing items to fit your taste
+<br />
+*** THIS IS AN UNFINISHED PROJECT ***
 
 <h3>Requirements:</h3>
 <ul>
